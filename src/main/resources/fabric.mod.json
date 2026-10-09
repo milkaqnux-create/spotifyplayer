@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "mediahud",
+  "version": "${version}",
+  "name": "Media HUD",
+  "description": "Odtwarzacz Spotify na ekranie: okładka, tytuł, przyciski, przesuwanie i skala w czacie.",
+  "authors": ["you"],
+  "environment": "client",
+  "entrypoints": {
+    "client": ["pl.mediahud.MediaHudMod"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.4",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
