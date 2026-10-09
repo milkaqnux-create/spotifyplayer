@@ -1,0 +1,46 @@
+
+name: Build Minecraft Mod JAR
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Pobierz pliki
+        uses: actions/checkout@v4
+
+      - name: Ustaw Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Zainstaluj Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+
+      - name: Zbuduj moda
+        run: gradle clean build --no-daemon
+
+      - name: Sprawdz gotowe pliki
+        run: ls -lh build/libs/
+
+      # TA SEKCJA DODAJE PLIK DO POBRANIA
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: Gotowy-Mod-Fabric-1.21.4
+          path: |
+            build/libs/*.jar
+            !build/libs/*-sources.jar
+            !build/libs/*-dev.jar
+          if-no-files-found: error
+          retention-days: 30
